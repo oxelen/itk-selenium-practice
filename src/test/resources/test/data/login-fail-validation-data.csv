@@ -1,4 +1,4 @@
-login,password
-,
-testLogin,
-,testPassword
+login,password,isLoginError,isPasswordError
+,,true,true
+testLogin,,false,true
+,testPassword,true,false

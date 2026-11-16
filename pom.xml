@@ -21,7 +21,6 @@
         <youTrack.baseUrl>http://localhost:8080</youTrack.baseUrl>
         <youTrack.admin.login>admin</youTrack.admin.login>
         <youTrack.admin.password>admin</youTrack.admin.password>
-        <test.data.path>src/test/resources/test/data</test.data.path>
     </properties>
 
     <!-- Source: https://mvnrepository.com/artifact/com.typesafe/config -->
@@ -79,7 +78,6 @@
                         <YOUTRACK_BASE_URL>${youTrack.baseUrl}</YOUTRACK_BASE_URL>
                         <YOUTRACK_ADMIN_LOGIN>${youTrack.admin.login}</YOUTRACK_ADMIN_LOGIN>
                         <YOUTRACK_ADMIN_PASSWORD>${youTrack.admin.password}</YOUTRACK_ADMIN_PASSWORD>
-                        <TEST_DATA_PATH>${test.data.path}</TEST_DATA_PATH>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

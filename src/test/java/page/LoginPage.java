@@ -1,6 +1,7 @@
 package page;
 
 import conf.YouTrackConfig;
+import org.junit.jupiter.params.provider.Arguments;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,11 +40,29 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    public LoginPage unsuccessLogin() {
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
+        return this;
+    }
+
     public DashboardPage successLogin(String username, String password) {
-        inputUsername(username);
-        inputPassword(password);
+        fillFields(username, password);
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
         return new DashboardPage();
+    }
+
+    public LoginPage fillFields(String username, String password) {
+        if (username != null) inputUsername(username);
+        if (password != null) inputPassword(password);
+        return this;
+    }
+
+    public String getUsernameBorderColor() {
+        return usernameInput.getCssValue("border-color");
+    }
+
+    public String getPasswordBorderColor() {
+        return passwordInput.getCssValue("border-color");
     }
 
     public RegisterPage openRegisterPage() {
