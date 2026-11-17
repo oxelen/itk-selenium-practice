@@ -1,15 +1,11 @@
 package page;
 
 import conf.YouTrackConfig;
-import org.junit.jupiter.params.provider.Arguments;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 
 public class LoginPage extends BasePage {
     @FindBy(xpath = "//input[@id='username']")
@@ -26,8 +22,6 @@ public class LoginPage extends BasePage {
 
     public LoginPage() {
         driver.get(YouTrackConfig.baseUrl + "/hub/auth");
-        PageFactory.initElements(driver, this);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public LoginPage inputUsername(String username) {
@@ -40,29 +34,25 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public LoginPage unsuccessLogin() {
-        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
-        return this;
-    }
-
     public DashboardPage successLogin(String username, String password) {
-        fillFields(username, password);
+        if (tryLogin(username, password)) {
+            return new DashboardPage();
+        } else {
+            throw new RuntimeException("Bad data");
+        }
+    }
+
+    public boolean tryLogin(String username, String password) {
+        inputUsername(username);
+        inputPassword(password);
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
-        return new DashboardPage();
-    }
 
-    public LoginPage fillFields(String username, String password) {
-        if (username != null) inputUsername(username);
-        if (password != null) inputPassword(password);
-        return this;
-    }
-
-    public String getUsernameBorderColor() {
-        return usernameInput.getCssValue("border-color");
-    }
-
-    public String getPasswordBorderColor() {
-        return passwordInput.getCssValue("border-color");
+        try {
+            wait.until(ExpectedConditions.urlContains("dashboard"));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     public RegisterPage openRegisterPage() {

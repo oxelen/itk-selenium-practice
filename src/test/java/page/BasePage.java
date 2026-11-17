@@ -1,11 +1,16 @@
 package page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class BasePage {
     protected static WebDriver driver;
     protected static WebDriverWait wait;
+
+    protected BasePage() {
+        PageFactory.initElements(driver, this);
+    }
 
     public static void setDriver(WebDriver driver) {
         BasePage.driver = driver;

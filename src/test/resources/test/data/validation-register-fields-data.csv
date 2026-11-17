@@ -1,0 +1,6 @@
+Display name, Login name, Email, Password, Confirm Password, success
+testName, testLogin, testEmail@test.com, testPassword, testPassword,true
+ , , , , ,false
+ ,testLogin,test,testPassword,test,false
+t,t,@t, ,testConfirm,false
+test,test,test,test,test,false
