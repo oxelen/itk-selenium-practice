@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -8,7 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class IssuesPage extends SideBar {
     @FindBy(xpath = "//a[@data-test='createIssueButton']")
@@ -26,9 +28,13 @@ public class IssuesPage extends SideBar {
     @FindBy(xpath = "//button[@data-test='confirm-ok-button']")
     private WebElement confirmButton;
 
+    public IssuesPage(WebDriver driver) {
+        super(driver);
+    }
+
     public CreateIssueWindow clickCreateIssueButton() {
         wait.until(elementToBeClickable(createIssueButton)).click();
-        return new CreateIssueWindow();
+        return new CreateIssueWindow(driver);
     }
 
     public IssuesPage refresh() {
@@ -59,6 +65,7 @@ public class IssuesPage extends SideBar {
         clickSelectAllTicketsCheckbox();
         clickDeleteItemButton();
         clickConfirmButton();
+
         return this;
     }
 
@@ -72,20 +79,25 @@ public class IssuesPage extends SideBar {
         @FindBy(xpath = "//button[@data-test='submit-button']")
         private WebElement submitButton;
 
+        public CreateIssueWindow(WebDriver driver) {
+            super(driver);
+        }
+
         public CreateIssueWindow inputSummary(String summary) {
             if (summary != null) wait.until(ExpectedConditions.visibilityOf(summaryInput)).sendKeys(summary);
             return this;
         }
 
         public CreateIssueWindow inputDescription(String description) {
-            if (description != null) wait.until(ExpectedConditions.visibilityOf(descriptionInput)).sendKeys(description);
+            if (description != null)
+                wait.until(ExpectedConditions.visibilityOf(descriptionInput)).sendKeys(description);
             return this;
         }
 
         public CreatedIssueWindow clickSubmitButton() {
             if (isSubmitClickable()) {
                 submitButton.click();
-                return new CreatedIssueWindow();
+                return new CreatedIssueWindow(driver);
             } else {
                 throw new RuntimeException("Button is not clickable");
             }
@@ -111,6 +123,10 @@ public class IssuesPage extends SideBar {
         @FindBy(xpath = "//button[@data-test='ring-dialog-close-button']")
         private WebElement closeButton;
 
+        public CreatedIssueWindow(WebDriver driver) {
+            super(driver);
+        }
+
         public String getTicketSummaryValue() {
             return wait.until(ExpectedConditions.visibilityOf(ticketSummary)).getText();
         }
@@ -121,7 +137,7 @@ public class IssuesPage extends SideBar {
 
         public IssuesPage clickCloseButton() {
             wait.until(ExpectedConditions.elementToBeClickable(closeButton)).click();
-            return new IssuesPage();
+            return new IssuesPage(driver);
         }
     }
 }

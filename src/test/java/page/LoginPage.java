@@ -2,6 +2,7 @@ package page;
 
 import conf.YouTrackConfig;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,7 +21,8 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//span[text()='Sign up']/../parent::a")
     private WebElement signupButton;
 
-    public LoginPage() {
+    public LoginPage(WebDriver driver) {
+        super(driver);
         driver.get(YouTrackConfig.baseUrl + "/hub/auth");
     }
 
@@ -36,7 +38,7 @@ public class LoginPage extends BasePage {
 
     public DashboardPage successLogin(String username, String password) {
         if (tryLogin(username, password)) {
-            return new DashboardPage();
+            return new DashboardPage(driver);
         } else {
             throw new RuntimeException("Bad data");
         }
@@ -57,6 +59,6 @@ public class LoginPage extends BasePage {
 
     public RegisterPage openRegisterPage() {
         wait.until(ExpectedConditions.elementToBeClickable(signupButton)).click();
-        return new RegisterPage();
+        return new RegisterPage(driver);
     }
 }

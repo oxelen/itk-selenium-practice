@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -23,6 +24,10 @@ public class DashboardPage extends SideBar {
 
     @FindBy(xpath = "//div[@data-test='entity-selector-list-item-label']//a[@data-test='ring-link']")
     private List<WebElement> dashboardsListItems;
+
+    public DashboardPage(WebDriver driver) {
+        super(driver);
+    }
 
     public DashboardPage createNewDashboard(String dashboardName) {
         wait.until(elementToBeClickable(newDashboardButton)).click();

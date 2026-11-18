@@ -18,11 +18,25 @@
         <selenium.version>4.52.0</selenium.version>
         <webdrivermanager.version>6.3.3</webdrivermanager.version>
         <lombok.version>1.18.46</lombok.version>
+        <maven.surefire.version>3.2.5</maven.surefire.version>
 
         <youTrack.baseUrl>http://localhost:8080</youTrack.baseUrl>
         <youTrack.admin.login>admin</youTrack.admin.login>
         <youTrack.admin.password>admin</youTrack.admin.password>
+
+        <parallel.enabled>true</parallel.enabled>
+        <parallel.mode>concurrent</parallel.mode>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>same_thread</id>
+            <properties>
+                <parallel.enabled>false</parallel.enabled>
+                <parallel.mode>same_thread</parallel.mode>
+            </properties>
+        </profile>
+    </profiles>
 
     <!-- Source: https://mvnrepository.com/artifact/com.typesafe/config -->
     <dependencies>
@@ -79,13 +93,29 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>${maven.surefire.version}</version>
                 <configuration>
                     <systemPropertyVariables>
                         <YOUTRACK_BASE_URL>${youTrack.baseUrl}</YOUTRACK_BASE_URL>
                         <YOUTRACK_ADMIN_LOGIN>${youTrack.admin.login}</YOUTRACK_ADMIN_LOGIN>
                         <YOUTRACK_ADMIN_PASSWORD>${youTrack.admin.password}</YOUTRACK_ADMIN_PASSWORD>
                     </systemPropertyVariables>
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled = ${parallel.enabled}
+                            junit.jupiter.execution.parallel.mode.default = ${parallel.mode}
+                            junit.jupiter.execution.parallel.mode.classes.default = ${parallel.mode}
+                        </configurationParameters>
+                    </properties>
+                    <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <outputName>YouTrack-test-report</outputName>
                 </configuration>
             </plugin>
         </plugins>

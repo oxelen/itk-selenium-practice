@@ -3,8 +3,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import page.BasePage;
 
 import java.time.Duration;
 
@@ -18,8 +16,6 @@ public abstract class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        BasePage.setDriver(driver);
-        BasePage.setWait(new WebDriverWait(driver, Duration.ofSeconds(5)));
     }
 
     @AfterEach
