@@ -1,19 +1,21 @@
-import model.RegisterUserModel;
+package ru.oxelen;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import page.LoginPage;
-import page.RegisterPage;
+import ru.oxelen.model.RegisterUserModel;
+import ru.oxelen.page.LoginPage;
+import ru.oxelen.page.RegisterPage;
 
 public class RegisterTest extends BaseTest {
-    public static final String VALIDATION_REG_DATA_PATH = "test/data/validation-register-fields-data.csv";
+    public static final String VALIDATION_REG_DATA_PATH = "/test/data/validation-register-fields-data.csv";
 
     private RegisterPage registerPage;
 
     @BeforeEach
     public void openRegisterPage() {
-        registerPage = new LoginPage(driver)
+        registerPage = new LoginPage(getDriver())
                 .openRegisterPage();
     }
 

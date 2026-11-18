@@ -1,3 +1,5 @@
+package ru.oxelen;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -5,11 +7,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.TimeoutException;
-import page.IssuesPage;
-import page.LoginPage;
+import ru.oxelen.page.IssuesPage;
+import ru.oxelen.page.LoginPage;
 
-import static conf.YouTrackConfig.adminLogin;
-import static conf.YouTrackConfig.adminPassword;
+import static ru.oxelen.conf.YouTrackConfig.adminLogin;
+import static ru.oxelen.conf.YouTrackConfig.adminPassword;
 
 @DisplayName("Тесты вкладки Issues")
 public class IssuesTest extends BaseTest {
@@ -20,7 +22,7 @@ public class IssuesTest extends BaseTest {
 
     @BeforeEach
     public void openIssuesPage() {
-        issuesPage = new LoginPage(driver)
+        issuesPage = new LoginPage(getDriver())
                 .successLogin(adminLogin, adminPassword)
                 .openIssues();
     }
@@ -70,7 +72,7 @@ public class IssuesTest extends BaseTest {
     @AfterEach
     public void deleteAllIssues() {
         try {
-            new LoginPage(driver)
+            new LoginPage(getDriver())
                     .successLogin(adminLogin, adminPassword)
                     .openIssues()
                     .deleteAllIssues();

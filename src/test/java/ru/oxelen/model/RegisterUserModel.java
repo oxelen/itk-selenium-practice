@@ -1,4 +1,4 @@
-package model;
+package ru.oxelen.model;
 
 public record RegisterUserModel(
         String username,

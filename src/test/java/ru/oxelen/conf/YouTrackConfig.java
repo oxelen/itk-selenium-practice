@@ -1,6 +1,6 @@
-package conf;
+package ru.oxelen.conf;
 
-import static conf.ConfigProvider.CONFIG;
+import static ru.oxelen.conf.ConfigProvider.CONFIG;
 
 public interface YouTrackConfig {
     String baseUrl = CONFIG.getString("youTrack.baseUrl");

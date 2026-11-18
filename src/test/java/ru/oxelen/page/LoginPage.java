@@ -1,11 +1,11 @@
-package page;
+package ru.oxelen.page;
 
-import conf.YouTrackConfig;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.oxelen.conf.YouTrackConfig;
 
 
 public class LoginPage extends BasePage {

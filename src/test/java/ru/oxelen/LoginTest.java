@@ -1,17 +1,19 @@
+package ru.oxelen;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import page.LoginPage;
+import ru.oxelen.page.LoginPage;
 
 public class LoginTest extends BaseTest {
-    private static final String LOGIN_DATA_PATH = "test/data/login-test-data.csv";
+    private static final String LOGIN_DATA_PATH = "/test/data/login-test-data.csv";
 
     @DisplayName("Тест авторизации.")
     @ParameterizedTest(name = "{index}. Login: {0}. Password: {1}")
     @CsvFileSource(resources = LOGIN_DATA_PATH, numLinesToSkip = 1)
     public void loginTest(String username, String password, boolean success) {
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(getDriver());
         Assertions.assertEquals(
                 success,
                 loginPage.tryLogin(username, password),
