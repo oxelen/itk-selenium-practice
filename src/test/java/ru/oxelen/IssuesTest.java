@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.TimeoutException;
+import ru.oxelen.page.CreatedIssueWindow;
 import ru.oxelen.page.IssuesPage;
 import ru.oxelen.page.LoginPage;
 
@@ -49,7 +50,7 @@ public class IssuesTest extends BaseTest {
             "Описание: {1} ")
     @CsvFileSource(resources = SUCCESS_CREATE_ISSUE_DATA, numLinesToSkip = 1)
     public void successCreateIssueTest(String summary, String description) {
-        IssuesPage.CreatedIssueWindow createdIssueWindow = issuesPage
+        CreatedIssueWindow createdIssueWindow = issuesPage
                 .clickCreateIssueButton()
                 .inputSummary(summary)
                 .inputDescription(description)
